@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import math
 import operator
 from random import randint
@@ -8,6 +11,7 @@ import pyscroll
 import pytmx
 import inputbox
 import programHelper
+import subprocess
 from astar import AStar
 from pygame.locals import *
 from pytmx.util_pygame import load_pygame
@@ -214,6 +218,16 @@ class RandomGame(object):
                     pygame.exit()
                     break
 
+                if event.key == K_p:
+                    hp = randint(1,99)
+                    atk = randint(1,99)
+                    dfs = randint(1,99)
+                    satk = randint(1,99)
+                    sdef = randint(1,99)
+                    speed = randint(1,99)
+                    
+                    subprocess.Popen("python3 pokemon.py -hp " + str(hp) + " -atk " + str(atk) + " -dfs " + str(dfs) + " -satk " + str(satk) + " -sdef " + str(sdef) + " -speed " + str(speed), shell=True)
+
                 if event.key == K_SPACE:
                     tile_position = tuple(map(operator.floordiv, self.player.position, self.map_layer.data.tile_size))
                     print(self.objectlist[0][0], self.objectlist[0][1], self.objectlist[0][2])
@@ -290,8 +304,8 @@ class RandomGame(object):
                         self._move_queue = self.mesh.astar(tile_position, (int(cords[0]), int(cords[1])))
                     else:
                         inputbox.display_box(screen, "W podanym miejscu znajduje się przeszkoda")
-                        sleep(2)
-'''
+                        sleep(2)        
+'''           
             elif event.type == VIDEORESIZE:
                 init_screen(event.w, event.h)
                 self.map_layer.set_size((event.w / 2, event.h / 2))
